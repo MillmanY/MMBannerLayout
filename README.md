@@ -5,11 +5,26 @@
 [![License](https://img.shields.io/cocoapods/l/MMBannerLayout.svg?style=flat)](http://cocoapods.org/pods/MMBannerLayout)
 [![Platform](https://img.shields.io/cocoapods/p/MMBannerLayout.svg?style=flat)](http://cocoapods.org/pods/MMBannerLayout)
 
+## Demo
+![demo](https://github.com/MillmanY/MMBannerLayout/blob/master/demo.gif)
+
 ## Example
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
-## Requirements
+## Use Banner
+        if let layout = collection.collectionViewLayout as? MMBanerLayout {
+            // Space every Item
+            layout.itemSpace = 5.0
+            // Size for banner cell
+            layout.itemSize = self.collection.frame.insetBy(dx: 40, dy: 40).size
+            // scroll to inifite
+            layout.isInfinite = true
+            // auto play
+            layout.autoPlayBanner = true
+            // angle need to be (0~90)
+            layout.angle = 45
+        }
 
 ## Installation
 
