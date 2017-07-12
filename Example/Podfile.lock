@@ -1,0 +1,16 @@
+PODS:
+  - MMBannerLayout (0.1.0)
+
+DEPENDENCIES:
+  - MMBannerLayout (from `../`)
+
+EXTERNAL SOURCES:
+  MMBannerLayout:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  MMBannerLayout: 1832bcf0364ce4d3bae59bdc4e9eb42c4c006355
+
+PODFILE CHECKSUM: 08b05e62912ff5837118e3635cf95060db91100a
+
+COCOAPODS: 1.2.1.rc.1

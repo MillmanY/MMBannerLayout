@@ -1,0 +1,6 @@
+framework module Pods_MMBannerLayout_Example {
+  umbrella header "Pods-MMBannerLayout_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

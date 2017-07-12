@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0398E96582A17474EDAF6D80 /* Pods_MMBannerLayout_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E9D42DCED3D960A41A89C3C /* Pods_MMBannerLayout_Example.framework */; };
+		5EFDA6AB1F15D2AC006ACD6E /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5EFDA6AA1F15D2AC006ACD6E /* ImageCell.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -31,7 +32,8 @@
 		4171A04BA24A1B604E3DC073 /* Pods-MMBannerLayout_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MMBannerLayout_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-MMBannerLayout_Example/Pods-MMBannerLayout_Example.release.xcconfig"; sourceTree = "<group>"; };
 		47326BB4FF59F7B643FD8E00 /* Pods-MMBannerLayout_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MMBannerLayout_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MMBannerLayout_Example/Pods-MMBannerLayout_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		4F47F6B163C9B0666CAB5CF7 /* Pods-MMBannerLayout_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MMBannerLayout_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MMBannerLayout_Tests/Pods-MMBannerLayout_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		50EE70134D195399C0EF6CEE /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		50EE70134D195399C0EF6CEE /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		5EFDA6AA1F15D2AC006ACD6E /* ImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCell.swift; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* MMBannerLayout_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MMBannerLayout_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -43,10 +45,10 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		6E9D42DCED3D960A41A89C3C /* Pods_MMBannerLayout_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MMBannerLayout_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		915EF157FCC1CCDF56062853 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		915EF157FCC1CCDF56062853 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		A3E907657A13251FE902B38A /* Pods_MMBannerLayout_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MMBannerLayout_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3C24ADDFAC06F2A9BE1EE00 /* Pods-MMBannerLayout_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MMBannerLayout_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MMBannerLayout_Tests/Pods-MMBannerLayout_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		EE7DF888C38DF7602F2641AD /* MMBannerLayout.podspec */ = {isa = PBXFileReference; includeInIndex = 1; name = MMBannerLayout.podspec; path = ../MMBannerLayout.podspec; sourceTree = "<group>"; };
+		EE7DF888C38DF7602F2641AD /* MMBannerLayout.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = MMBannerLayout.podspec; path = ../MMBannerLayout.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
+				5EFDA6AA1F15D2AC006ACD6E /* ImageCell.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
@@ -215,10 +218,12 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = Q4F8GN9847;
 						LastSwiftMigration = 0820;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
+						DevelopmentTeam = Q4F8GN9847;
 						LastSwiftMigration = 0820;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -363,6 +368,7 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				5EFDA6AB1F15D2AC006ACD6E /* ImageCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +502,7 @@
 			baseConfigurationReference = 47326BB4FF59F7B643FD8E00 /* Pods-MMBannerLayout_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = Q4F8GN9847;
 				INFOPLIST_FILE = MMBannerLayout/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -510,6 +517,7 @@
 			baseConfigurationReference = 4171A04BA24A1B604E3DC073 /* Pods-MMBannerLayout_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = Q4F8GN9847;
 				INFOPLIST_FILE = MMBannerLayout/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -523,6 +531,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 4F47F6B163C9B0666CAB5CF7 /* Pods-MMBannerLayout_Tests.debug.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = Q4F8GN9847;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -543,6 +552,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = B3C24ADDFAC06F2A9BE1EE00 /* Pods-MMBannerLayout_Tests.release.xcconfig */;
 			buildSettings = {
+				DEVELOPMENT_TEAM = Q4F8GN9847;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
