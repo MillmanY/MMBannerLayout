@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'MMBannerLayout_Example' do
+  pod 'MMBannerLayout', :path => '../'
+
+  target 'MMBannerLayout_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
