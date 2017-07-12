@@ -19,11 +19,11 @@ Pod::Spec.new do |s|
 
   s.description      = 'Custom Banner with 1.margin 2.Infinite 3.autoPlay 4.angle'
 
-  s.homepage         = 'https://github.com/millmanyang@gmail.com/MMBannerLayout'
+  s.homepage         = 'https://github.com/MillmanY/MMBannerLayout'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'millmanyang@gmail.com' => 'millmanyang@gmail.com' }
-  s.source           = { :git => 'https://github.com/millmanyang@gmail.com/MMBannerLayout.git', :tag => s.version.to_s }
+  s.source           = { :git => 'https://github.com/MillmanY/MMBannerLayout.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
