@@ -6,7 +6,7 @@
 [![Platform](https://img.shields.io/cocoapods/p/MMBannerLayout.svg?style=flat)](http://cocoapods.org/pods/MMBannerLayout)
 
 ## Demo
-![demo](https://github.com/MillmanY/MMBannerLayout/blob/master/demo.gif)
+![demo](https://github.com/MillmanY/MMBannerLayout/blob/master/mid_demo.gif)
 
 ## Example
 
