@@ -71,7 +71,7 @@ public class MMBanerLayout: UICollectionViewLayout {
             let centerX = self.collectionView!.contentOffset.x + (self.collectionView!.frame.width/2)
             
             if let attr = self.attributeList[safe: newValue] {
-                let isAnimate = !(!self.isInfinite && newValue == 0)
+                let isAnimate = !(!self._isInfinite && newValue == 0)
                 
                 let x = self.collectionView!.contentOffset.x + attr.realFrame.midX - centerX
                 self.collectionView!.setContentOffset(CGPoint(x: x, y: 0), animated: isAnimate)
@@ -83,10 +83,9 @@ public class MMBanerLayout: UICollectionViewLayout {
             return _currentIdx
         }
     }
-    
-    public var isInfinite:Bool = false {
+    fileprivate var _isInfinite = false {
         didSet {
-            if isInfinite {
+            if self._isInfinite {
                 let twoDistance =  itemSize.width/2+angleItemWidth/2+itemSpace
                 let cycleStart = twoDistance*CGFloat(self.collectionView!.calculate.totalCount*100000)
                 self.collectionView!.setContentOffset(CGPoint(x: cycleStart, y: 0), animated: false)
@@ -120,7 +119,7 @@ public class MMBanerLayout: UICollectionViewLayout {
     fileprivate var attributeList = [BannerLayoutAttributes]()
     override public var collectionViewContentSize: CGSize {
         get {
-            return self.totalContentSize(isInfinite: self.isInfinite)
+            return self.totalContentSize(isInfinite: self._isInfinite)
         }
     }
     
@@ -141,7 +140,7 @@ public class MMBanerLayout: UICollectionViewLayout {
         var cycle = Int(floor((point - edgeMargin)/(twoDistance*CGFloat(total))))
         let cycleStart = edgeMargin + twoDistance*CGFloat(total*cycle)
         var idx = Int(floor((point - cycleStart)/twoDistance))
-        if !self.isInfinite && (cycle > 0) {
+        if !self._isInfinite && (cycle > 0) {
             cycle = 0
             idx = total - 1
         } else if total == 0 || cycle < 0 {
@@ -152,6 +151,19 @@ public class MMBanerLayout: UICollectionViewLayout {
         }
         
         return (cycle, idx)
+    }
+    
+    public func setInfinite(isInfinite: Bool, completed:((_ success: Bool) -> Void)?) {
+        
+        if isInfinite {
+            let twoDistance =  itemSize.width/2+angleItemWidth/2+itemSpace
+            let needItem = Int(ceil(self.collectionView!.frame.width/twoDistance))
+            self._isInfinite = needItem < self.collectionView!.calculate.totalCount
+            completed?(self._isInfinite)
+        } else {
+            self._isInfinite = isInfinite
+            completed?(true)
+        }
     }
     
     fileprivate func totalContentSize(isInfinite: Bool) -> CGSize {
@@ -192,8 +204,8 @@ public class MMBanerLayout: UICollectionViewLayout {
         if self.collectionView!.calculate.isNeedUpdate() {
             attributeList.removeAll()
             attributeList = self.generateAttributeList()
-            let reset = self.isInfinite
-            self.isInfinite = reset
+            let reset = self._isInfinite
+            self._isInfinite = reset
         }
         self.setAttributeFrame()
     }
@@ -300,13 +312,13 @@ public class MMBanerLayout: UICollectionViewLayout {
             var idx = _currentIdx
             
             if velocity.x > 0 {
-                if !self.isInfinite {
+                if !self._isInfinite {
                     idx = (_currentIdx+1 > lastIdx) ? lastIdx : _currentIdx+1
                 } else {
                     idx = (_currentIdx+1 > lastIdx) ? (currentIdx)%lastIdx : _currentIdx+1                
                 }
             } else {
-                if !self.isInfinite {
+                if !self._isInfinite {
                     idx = (_currentIdx-1 < 0) ? 0 : currentIdx-1
                 } else {
                     idx = (_currentIdx-1 < 0) ? lastIdx : currentIdx-1

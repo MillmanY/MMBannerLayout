@@ -76,7 +76,7 @@
                                     <action selector="inifiteActionWithSw:" destination="vXZ-lx-hvc" eventType="valueChanged" id="liW-Wo-Kbd"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Layout Inifite" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qqa-Ht-Mh3">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Layout Infinite" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qqa-Ht-Mh3">
                                 <rect key="frame" x="32" y="377" width="120" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="RMd-Jh-xKz"/>
@@ -143,6 +143,7 @@
                     </view>
                     <connections>
                         <outlet property="collection" destination="Byr-MX-h2n" id="50J-Dj-2bH"/>
+                        <outlet property="infiniteSwitch" destination="9RP-9n-pXG" id="3Pv-ng-dkw"/>
                         <outlet property="labAngle" destination="fax-oH-Xei" id="W67-Wx-FuY"/>
                     </connections>
                 </viewController>

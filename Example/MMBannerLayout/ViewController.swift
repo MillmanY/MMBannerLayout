@@ -10,6 +10,7 @@ import UIKit
 import MMBannerLayout
 class ViewController: UIViewController {
     var images = [#imageLiteral(resourceName: "images"),#imageLiteral(resourceName: "images2"),#imageLiteral(resourceName: "images3"),#imageLiteral(resourceName: "images4"),#imageLiteral(resourceName: "images5"),#imageLiteral(resourceName: "images6")]
+    @IBOutlet weak var infiniteSwitch : UISwitch!
     @IBOutlet weak var labAngle: UILabel!
     @IBOutlet weak var collection: UICollectionView!
     override func viewDidLoad() {
@@ -22,7 +23,22 @@ class ViewController: UIViewController {
     }
     
     @IBAction func inifiteAction(sw: UISwitch) {
-        (collection.collectionViewLayout as? MMBanerLayout)?.isInfinite = sw.isOn
+    
+        (collection.collectionViewLayout as? MMBanerLayout)?.setInfinite(isInfinite: sw.isOn, completed: { [unowned self] (result) in
+            if result {
+                return
+            }
+            // Prevent your content size is enough to cycle
+            let alert = UIAlertController.init(title: "Layout error", message: "Your item cant Infinite ", preferredStyle: .alert)
+            
+
+            let action = UIAlertAction(title: "Confirm", style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                sw.isOn = result
+            })
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
+        })
     }
     
     @IBAction func autoPlayAction(sw: UISwitch) {
@@ -31,7 +47,8 @@ class ViewController: UIViewController {
     
     @IBAction func angleAction(slider: UISlider) {
         labAngle.text = "Angle: \(slider.value)"
-        (collection.collectionViewLayout as? MMBanerLayout)?.isInfinite = false
+        infiniteSwitch.isOn = false
+        (collection.collectionViewLayout as? MMBanerLayout)?.setInfinite(isInfinite: false, completed: nil)
         (collection.collectionViewLayout as? MMBanerLayout)?.angle = CGFloat(slider.value)
     }
 }
