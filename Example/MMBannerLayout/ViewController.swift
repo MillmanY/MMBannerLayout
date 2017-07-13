@@ -9,7 +9,7 @@
 import UIKit
 import MMBannerLayout
 class ViewController: UIViewController {
-    var images = [#imageLiteral(resourceName: "images"),#imageLiteral(resourceName: "images2"),#imageLiteral(resourceName: "images3"),#imageLiteral(resourceName: "images4"),#imageLiteral(resourceName: "images5"),#imageLiteral(resourceName: "images6")]
+    var images = [#imageLiteral(resourceName: "images"),#imageLiteral(resourceName: "images2"),#imageLiteral(resourceName: "images3"),#imageLiteral(resourceName: "images4"),#imageLiteral(resourceName: "images5"),#imageLiteral(resourceName: "images6"),#imageLiteral(resourceName: "images7")]
     @IBOutlet weak var infiniteSwitch : UISwitch!
     @IBOutlet weak var labAngle: UILabel!
     @IBOutlet weak var collection: UICollectionView!

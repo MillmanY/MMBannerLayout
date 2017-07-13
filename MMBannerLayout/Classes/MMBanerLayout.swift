@@ -42,7 +42,6 @@ public class MMBanerLayout: UICollectionViewLayout {
             }
         }
     }
-    
     fileprivate var radius: CGFloat{
         get {
             return angle*CGFloat.pi/180
@@ -64,7 +63,7 @@ public class MMBanerLayout: UICollectionViewLayout {
             return _itemSize ?? self.collectionView!.frame.size
         }
     }
-    
+    fileprivate var indexSetWhenPrepare = false
     fileprivate var _currentIdx = 0
     public var currentIdx:Int {
         set {
@@ -131,6 +130,8 @@ public class MMBanerLayout: UICollectionViewLayout {
             return _indexRange
         }
     }
+
+    fileprivate var setIdx = [Int]()
     
     fileprivate func cycleAt(point: CGFloat) -> (cycle: Int,index: Int) {
         let total = self.collectionView!.calculate.totalCount
@@ -173,7 +174,7 @@ public class MMBanerLayout: UICollectionViewLayout {
         } else {
             let twoDistance =  itemSize.width/2+angleItemWidth/2+itemSpace
 
-            width = (twoDistance) * CGFloat(self.collectionView!.calculate.totalCount-1) + 2*itemSize.width + 2*edgeMargin
+            width = (twoDistance) * CGFloat(self.collectionView!.calculate.totalCount-1) + itemSize.width + 2*edgeMargin
         }
         let height = self.collectionView!.frame.height
         
@@ -214,14 +215,11 @@ public class MMBanerLayout: UICollectionViewLayout {
         if self.collectionView!.contentOffset.x < 0 {
             return
         }
+        setIdx.removeAll()
         let height = self.collectionView!.frame.height
-        
         let range =  self.indexRange
-        
         let centerX = self.collectionView!.contentOffset.x + (self.collectionView!.frame.width/2)
-        
         let lastIdx = self.collectionView!.calculate.totalCount - 1
-        var setIdx = [Int]()
         var centerIdx = 0
         var preDistance = CGFloat.greatestFiniteMagnitude
         
@@ -253,6 +251,9 @@ public class MMBanerLayout: UICollectionViewLayout {
         if percent >= 1 {
             percent = 0.0
             self._currentIdx = centerIdx
+            indexSetWhenPrepare = true
+        } else {
+            indexSetWhenPrepare = false
         }
         
         let centerLoc = setIdx.index(of: _currentIdx) ?? 0
@@ -299,8 +300,7 @@ public class MMBanerLayout: UICollectionViewLayout {
     }
     
     override public func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        let arr = attributeList.filter { $0.frame.intersects(rect) }
-        return arr
+        return setIdx.flatMap({ attributeList[safe:$0] })
     }
     
     override public func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
@@ -311,14 +311,18 @@ public class MMBanerLayout: UICollectionViewLayout {
         if velocity.x != 0 {
             var idx = _currentIdx
             
-            if velocity.x > 0 {
-                if !self._isInfinite {
+            if velocity.x > 0{
+                if indexSetWhenPrepare {
+                    
+                } else if !self._isInfinite {
                     idx = (_currentIdx+1 > lastIdx) ? lastIdx : _currentIdx+1
                 } else {
                     idx = (_currentIdx+1 > lastIdx) ? (currentIdx)%lastIdx : _currentIdx+1                
                 }
             } else {
-                if !self._isInfinite {
+                if indexSetWhenPrepare {
+                    
+                } else if !self._isInfinite {
                     idx = (_currentIdx-1 < 0) ? 0 : currentIdx-1
                 } else {
                     idx = (_currentIdx-1 < 0) ? lastIdx : currentIdx-1
@@ -334,7 +338,6 @@ public class MMBanerLayout: UICollectionViewLayout {
                 fix.x = self.collectionView!.contentOffset.x + attr.realFrame.midX - centerX
             }
         }
-
         return fix
     }
     
