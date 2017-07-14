@@ -18,10 +18,12 @@ To run the example project, clone the repo, and run `pod install` from the Examp
             layout.itemSpace = 5.0
             // Size for banner cell
             layout.itemSize = self.collection.frame.insetBy(dx: 40, dy: 40).size
-            // scroll to inifite
-            layout.isInfinite = true
+            // scroll to inifite (ex. completed block check your content size is enough to cycle infinite)
+           (collection.collectionViewLayout as? MMBanerLayout)?.setInfinite(isInfinite: true, completed: { [unowned self]                    (result) in
+                // result false mean you cant infinite
+           })
             // auto play
-            layout.autoPlayBanner = true
+            (collection.collectionViewLayout as? MMBanerLayout)?.autoPlayStatus = .play(duration: 2.0)
             // angle need to be (0~90)
             layout.angle = 45
         }
