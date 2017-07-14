@@ -42,7 +42,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func autoPlayAction(sw: UISwitch) {
-        (collection.collectionViewLayout as? MMBanerLayout)?.autoPlayBanner = sw.isOn
+        if sw.isOn {
+            (collection.collectionViewLayout as? MMBanerLayout)?.autoPlayStatus = .play(duration: 2.0)
+        } else {
+            (collection.collectionViewLayout as? MMBanerLayout)?.autoPlayStatus = .none
+        }
     }
     
     @IBAction func angleAction(slider: UISlider) {

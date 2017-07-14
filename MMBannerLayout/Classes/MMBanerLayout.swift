@@ -8,6 +8,11 @@
 
 import UIKit
 
+public enum AutoPlayStatus {
+    case none
+    case play(duration: TimeInterval)
+}
+
 struct InfiniteLayoutRange {
     var start:(cycle: Int,index: Int) = (0,0)
     var end:(cycle:Int, index: Int) = (0,0)
@@ -31,7 +36,6 @@ class BannerLayoutAttributes: UICollectionViewLayoutAttributes {
 
 public class MMBanerLayout: UICollectionViewLayout {
     public var itemSpace:CGFloat = 0.0
-    
     public var angle: CGFloat = 0.0 {
         didSet {
             self.invalidateLayout()
@@ -82,6 +86,7 @@ public class MMBanerLayout: UICollectionViewLayout {
             return _currentIdx
         }
     }
+    
     fileprivate var _isInfinite = false {
         didSet {
             if self._isInfinite {
@@ -103,18 +108,19 @@ public class MMBanerLayout: UICollectionViewLayout {
     }
     
     fileprivate var timer: Timer?
-    public var autoPlayBanner: Bool = false {
+    public var autoPlayStatus: AutoPlayStatus = .none {
         didSet {
-            self.setPlayTimer()
+            timer?.invalidate()
+            switch autoPlayStatus {
+            case .none:
+                timer = nil
+            case .play(let duration):
+                timer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(MMBanerLayout.autoScroll), userInfo: nil, repeats: true)
+                RunLoop.current.add(timer!, forMode: .commonModes)
+            }
         }
     }
     
-    public var playDuration: TimeInterval = 3.0 {
-        didSet {
-            self.setPlayTimer()
-        }
-    }
-
     fileprivate var attributeList = [BannerLayoutAttributes]()
     override public var collectionViewContentSize: CGSize {
         get {
@@ -179,16 +185,6 @@ public class MMBanerLayout: UICollectionViewLayout {
         let height = self.collectionView!.frame.height
         
         return CGSize(width: width, height: height)
-    }
-    
-    fileprivate func setPlayTimer() {
-        timer?.invalidate()
-        if !autoPlayBanner {
-            timer = nil
-        } else {
-            timer = Timer.scheduledTimer(timeInterval: playDuration, target: self, selector: #selector(MMBanerLayout.autoScroll), userInfo: nil, repeats: true)
-            RunLoop.current.add(timer!, forMode: .commonModes)
-        }
     }
     
     @objc fileprivate func autoScroll() {

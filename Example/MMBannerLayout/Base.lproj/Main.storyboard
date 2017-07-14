@@ -100,7 +100,6 @@
                                 <rect key="frame" x="176" y="414.5" width="51" height="31"/>
                                 <connections>
                                     <action selector="autoPlayActionWithSw:" destination="vXZ-lx-hvc" eventType="valueChanged" id="W1v-8F-Uja"/>
-                                    <action selector="inifiteActionWithSw:" destination="vXZ-lx-hvc" eventType="valueChanged" id="Kjh-Uz-iDh"/>
                                 </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Angle: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fax-oH-Xei">
