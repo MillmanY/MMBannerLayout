@@ -15,7 +15,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var collection: UICollectionView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.layoutIfNeeded()
         if let layout = collection.collectionViewLayout as? MMBanerLayout {
             layout.itemSpace = 5.0
             layout.itemSize = self.collection.frame.insetBy(dx: 40, dy: 40).size
