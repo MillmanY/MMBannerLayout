@@ -8,10 +8,6 @@
 ## Demo
 ![demo](https://github.com/MillmanY/MMBannerLayout/blob/master/mid_demo.gif)
 
-## Example
-
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
-
 ## Setting
 
 ![demo](https://github.com/MillmanY/MMBannerLayout/blob/master/demo.png)
