@@ -27,6 +27,16 @@
             // angle need to be (0~90)
             layout.angle = 45
         }
+## Use BannerLayoutDelegate 
+
+        //(Just setting self.collectionView.delegate = [your target])
+        extension [your Target]: BannerLayoutDelegate {
+                 // Current IndexPath on center
+                 func focusOn(indexPath: IndexPath) {
+                     print("Focus on \(indexPath)")
+                }
+        }
+
 
 ## Installation
 
