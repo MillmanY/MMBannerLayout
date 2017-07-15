@@ -27,6 +27,16 @@
             // angle need to be (0~90)
             layout.angle = 45
         }
+## Use BannerLayoutDelegate 
+
+        //(Just setting self.collectionView.delegate = [your target])
+        extension [your Target]: BannerLayoutDelegate {
+                 // Current IndexPath on center
+                 func focusOn(indexPath: IndexPath) {
+                     print("Focus on \(indexPath)")
+                }
+        }
+
 
 ## Installation
 
@@ -34,6 +44,7 @@ MMBannerLayout is available through [CocoaPods](http://cocoapods.org). To instal
 it, simply add the following line to your Podfile:
 
 ```ruby
+(if you cant find pod command "pod repo update")
 pod "MMBannerLayout"
 ```
 
