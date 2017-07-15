@@ -8,9 +8,9 @@
 ## Demo
 ![demo](https://github.com/MillmanY/MMBannerLayout/blob/master/mid_demo.gif)
 
-## Example
+## Setting
 
-To run the example project, clone the repo, and run `pod install` from the Example directory first.
+![demo](https://github.com/MillmanY/MMBannerLayout/blob/master/demo.png)
 
 ## Use Banner
         if let layout = collection.collectionViewLayout as? MMBanerLayout {
