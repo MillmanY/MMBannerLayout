@@ -8,6 +8,10 @@
 
 import UIKit
 
+@objc public protocol BannerLayoutDelegate {
+    @objc optional func focusOn(indexPath: IndexPath)
+}
+
 public enum AutoPlayStatus {
     case none
     case play(duration: TimeInterval)
@@ -35,6 +39,14 @@ class BannerLayoutAttributes: UICollectionViewLayoutAttributes {
 }
 
 public class MMBanerLayout: UICollectionViewLayout {
+    public var focusIndexPath: IndexPath? {
+        didSet {
+            guard let f = focusIndexPath, (focusIndexPath != oldValue) else {
+                return
+            }
+            (self.collectionView!.delegate as? BannerLayoutDelegate)?.focusOn?(indexPath: f)
+        }
+    }
     public var itemSpace:CGFloat = 0.0
     public var angle: CGFloat = 0.0 {
         didSet {
@@ -251,7 +263,7 @@ public class MMBanerLayout: UICollectionViewLayout {
         } else {
             indexSetWhenPrepare = false
         }
-        
+        self.focusIndexPath = attributeList[safe:_currentIdx]?.indexPath
         let centerLoc = setIdx.index(of: _currentIdx) ?? 0
         var transform = CATransform3DIdentity
         

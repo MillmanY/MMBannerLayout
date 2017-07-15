@@ -57,6 +57,12 @@ class ViewController: UIViewController {
     }
 }
 
+extension ViewController: BannerLayoutDelegate {
+    func focusOn(indexPath: IndexPath) {
+        print("Focus on \(indexPath)")
+    }
+}
+
 extension ViewController: UICollectionViewDataSource {
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
