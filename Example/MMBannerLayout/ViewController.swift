@@ -58,8 +58,8 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: BannerLayoutDelegate {
-    func focusOn(indexPath: IndexPath) {
-        print("Focus on \(indexPath)")
+    func collectionView(_ collectionView: UICollectionView, focusAt indexPath: IndexPath) {
+        print("Focus At \(indexPath)")
     }
 }
 

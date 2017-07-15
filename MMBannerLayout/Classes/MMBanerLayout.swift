@@ -9,7 +9,7 @@
 import UIKit
 
 @objc public protocol BannerLayoutDelegate {
-    @objc optional func focusOn(indexPath: IndexPath)
+    @objc optional func collectionView(_ collectionView: UICollectionView, focusAt indexPath: IndexPath)
 }
 
 public enum AutoPlayStatus {
@@ -44,7 +44,8 @@ public class MMBanerLayout: UICollectionViewLayout {
             guard let f = focusIndexPath, (focusIndexPath != oldValue) else {
                 return
             }
-            (self.collectionView!.delegate as? BannerLayoutDelegate)?.focusOn?(indexPath: f)
+            
+            (self.collectionView!.delegate as? BannerLayoutDelegate)?.collectionView?(self.collectionView!, focusAt: f)
         }
     }
     public var itemSpace:CGFloat = 0.0
