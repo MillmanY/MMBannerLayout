@@ -43,6 +43,7 @@
 MMBannerLayout is available through [CocoaPods](http://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
+(if you cant find pod command "pod repo update")
 ```ruby
 pod "MMBannerLayout"
 ```
