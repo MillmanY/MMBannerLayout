@@ -32,7 +32,7 @@
         //(Just setting self.collectionView.delegate = [your target])
         extension [your Target]: BannerLayoutDelegate {
                  // Current IndexPath on center
-                 func focusOn(indexPath: IndexPath) {
+                func collectionView(_ collectionView: UICollectionView, focusAt indexPath: IndexPath) {
                      print("Focus on \(indexPath)")
                 }
         }
@@ -50,7 +50,7 @@ pod "MMBannerLayout"
 
 ## Author
 
-millmanyang@gmail.com, millmanyang@gmail.com
+millmanyang@gmail.com
 
 ## License
 
