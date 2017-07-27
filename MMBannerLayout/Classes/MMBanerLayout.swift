@@ -221,7 +221,7 @@ public class MMBanerLayout: UICollectionViewLayout {
     }
     
     fileprivate func setAttributeFrame() {
-        if self.collectionView!.contentOffset.x < 0 {
+        if self.collectionView!.contentOffset.x < 0 || self.collectionView?.calculate.totalCount == 0 {
             return
         }
         setIdx.removeAll()

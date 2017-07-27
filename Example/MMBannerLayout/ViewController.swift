@@ -9,7 +9,7 @@
 import UIKit
 import MMBannerLayout
 class ViewController: UIViewController {
-    var images = [#imageLiteral(resourceName: "images"),#imageLiteral(resourceName: "images2"),#imageLiteral(resourceName: "images3"),#imageLiteral(resourceName: "images4"),#imageLiteral(resourceName: "images5"),#imageLiteral(resourceName: "images6"),#imageLiteral(resourceName: "images7")]
+    var images = [#imageLiteral(resourceName: "images"),#imageLiteral(resourceName: "images2"),#imageLiteral(resourceName: "images3")]
     @IBOutlet weak var infiniteSwitch : UISwitch!
     @IBOutlet weak var labAngle: UILabel!
     @IBOutlet weak var collection: UICollectionView!
@@ -17,11 +17,11 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         self.view.layoutIfNeeded()
         if let layout = collection.collectionViewLayout as? MMBanerLayout {
-            layout.itemSpace = 5.0
+            layout.itemSpace = 10
             layout.itemSize = self.collection.frame.insetBy(dx: 40, dy: 40).size
         }
     }
-    
+
     @IBAction func inifiteAction(sw: UISwitch) {
     
         (collection.collectionViewLayout as? MMBanerLayout)?.setInfinite(isInfinite: sw.isOn, completed: { [unowned self] (result) in
