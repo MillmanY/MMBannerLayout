@@ -174,9 +174,8 @@ public class MMBanerLayout: UICollectionViewLayout {
     }
     
     public func setInfinite(isInfinite: Bool, completed:((_ success: Bool) -> Void)?) {
-        
         if isInfinite {
-            let twoDistance =  itemSize.width/2+angleItemWidth/2+itemSpace
+            let twoDistance =  max(1, itemSize.width/2+angleItemWidth/2+itemSpace)
             let needItem = Int(ceil(self.collectionView!.frame.width/twoDistance))
             self._isInfinite = needItem < self.collectionView!.calculate.totalCount
             completed?(self._isInfinite)
@@ -254,7 +253,11 @@ public class MMBanerLayout: UICollectionViewLayout {
                 setIdx.append(idx)
             })
         }
-        let midX = attributeList[_currentIdx].frame.midX
+
+        guard let midX = attributeList[safe:_currentIdx]?.frame.midX else {
+            return
+        }
+
         var percent = abs(centerX-midX)/twoDistance
         
         if percent >= 1 {
