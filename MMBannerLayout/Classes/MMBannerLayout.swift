@@ -38,7 +38,7 @@ class BannerLayoutAttributes: UICollectionViewLayoutAttributes {
     }
 }
 
-public class MMBanerLayout: UICollectionViewLayout {
+public class MMBannerLayout: UICollectionViewLayout {
     public var focusIndexPath: IndexPath? {
         didSet {
             guard let f = focusIndexPath, (focusIndexPath != oldValue) else {
@@ -125,7 +125,7 @@ public class MMBanerLayout: UICollectionViewLayout {
             case .none:
                 timer = nil
             case .play(let duration):
-                timer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(MMBanerLayout.autoScroll), userInfo: nil, repeats: true)
+                timer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(MMBannerLayout.autoScroll), userInfo: nil, repeats: true)
                 RunLoop.current.add(timer!, forMode: .commonModes)
             }
         }
