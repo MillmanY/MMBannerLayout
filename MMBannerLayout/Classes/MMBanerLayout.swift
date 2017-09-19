@@ -102,14 +102,11 @@ public class MMBanerLayout: UICollectionViewLayout {
     
     fileprivate var _isInfinite = false {
         didSet {
-            if self._isInfinite {
-                let twoDistance =  itemSize.width/2+angleItemWidth/2+itemSpace
-                let cycleStart = twoDistance*CGFloat(self.collectionView!.calculate.totalCount*100000)
-                self.collectionView!.setContentOffset(CGPoint(x: cycleStart, y: 0), animated: false)
-                self.collectionView!.showsHorizontalScrollIndicator = false
-            } else {
-                self.collectionView!.setContentOffset(.zero, animated: false)
-            }
+            let twoDistance =  itemSize.width/2+angleItemWidth/2+itemSpace
+            let cycleStart = self._isInfinite ? twoDistance*CGFloat(self.collectionView!.calculate.totalCount*100000) : 0
+            let location = twoDistance*CGFloat(_currentIdx)
+            let x = cycleStart + location
+            self.collectionView!.setContentOffset(CGPoint(x: x, y: 0), animated: false)
             self.invalidateLayout()
         }
     }

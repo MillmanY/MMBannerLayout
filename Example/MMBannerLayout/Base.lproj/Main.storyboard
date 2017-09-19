@@ -118,6 +118,13 @@
                                     <action selector="angleActionWithSlider:" destination="vXZ-lx-hvc" eventType="valueChanged" id="M1Q-qm-32M"/>
                                 </connections>
                             </slider>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IrY-MD-3cA">
+                                <rect key="frame" x="32" y="523" width="307" height="30"/>
+                                <state key="normal" title="append"/>
+                                <connections>
+                                    <action selector="appendAction" destination="vXZ-lx-hvc" eventType="touchUpInside" id="Owc-5J-3EC"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
@@ -126,12 +133,15 @@
                             <constraint firstItem="thq-bT-Yqi" firstAttribute="centerY" secondItem="fax-oH-Xei" secondAttribute="centerY" id="5Rp-iz-MQf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="thq-bT-Yqi" secondAttribute="trailing" constant="20" id="5pR-5g-zdR"/>
                             <constraint firstItem="9RP-9n-pXG" firstAttribute="leading" secondItem="Qqa-Ht-Mh3" secondAttribute="trailing" constant="24" id="7Sk-Bj-efb"/>
+                            <constraint firstItem="IrY-MD-3cA" firstAttribute="top" secondItem="fax-oH-Xei" secondAttribute="bottom" constant="26" id="DoP-yU-CTe"/>
                             <constraint firstItem="YEe-OE-lue" firstAttribute="centerY" secondItem="E3b-9l-FxO" secondAttribute="centerY" id="E3C-Pn-EoY"/>
                             <constraint firstItem="9RP-9n-pXG" firstAttribute="centerY" secondItem="Qqa-Ht-Mh3" secondAttribute="centerY" id="KII-46-66a"/>
                             <constraint firstItem="E3b-9l-FxO" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="16" id="KaF-vG-MpI"/>
                             <constraint firstItem="Byr-MX-h2n" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" id="Tes-F4-smd"/>
                             <constraint firstItem="YEe-OE-lue" firstAttribute="leading" secondItem="9RP-9n-pXG" secondAttribute="leading" id="VpU-QN-XdI"/>
+                            <constraint firstItem="IrY-MD-3cA" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="16" id="WKp-tV-Obt"/>
                             <constraint firstItem="Byr-MX-h2n" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" id="YNE-4e-aRR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="IrY-MD-3cA" secondAttribute="trailing" constant="20" id="hQw-u3-VUG"/>
                             <constraint firstItem="Byr-MX-h2n" firstAttribute="height" secondItem="kh9-bI-dsS" secondAttribute="height" multiplier="0.5" id="jNn-7h-Djt"/>
                             <constraint firstItem="thq-bT-Yqi" firstAttribute="leading" secondItem="YEe-OE-lue" secondAttribute="leading" id="ldZ-3P-Rhn"/>
                             <constraint firstItem="fax-oH-Xei" firstAttribute="top" secondItem="E3b-9l-FxO" secondAttribute="bottom" constant="22" id="puk-Ao-AeZ"/>

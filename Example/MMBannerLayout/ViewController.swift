@@ -21,6 +21,11 @@ class ViewController: UIViewController {
             layout.itemSize = self.collection.frame.insetBy(dx: 40, dy: 40).size
         }
     }
+    
+    @IBAction func appendAction() {
+        images.append(#imageLiteral(resourceName: "images7"))
+        collection.reloadData()
+    }
 
     @IBAction func inifiteAction(sw: UISwitch) {
     
