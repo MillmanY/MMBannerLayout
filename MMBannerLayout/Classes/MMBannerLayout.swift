@@ -194,7 +194,9 @@ public class MMBannerLayout: UICollectionViewLayout {
     }
     
     @objc fileprivate func autoScroll() {
-        if self.collectionView!.isDragging {
+        guard let collect = self.collectionView, !collect.isDragging else {
+            timer?.invalidate()
+            timer = nil
             return
         }
         let will = self.currentIdx + 1
