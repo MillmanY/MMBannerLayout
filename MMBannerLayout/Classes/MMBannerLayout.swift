@@ -92,7 +92,6 @@ public class MMBannerLayout: UICollectionViewLayout {
                 let x = self.collectionView!.contentOffset.x + attr.realFrame.midX - centerX
                 self.collectionView!.setContentOffset(CGPoint(x: x, y: 0), animated: isAnimate)
             }
-
             self._currentIdx = newValue
             
         } get {
@@ -157,10 +156,7 @@ public class MMBannerLayout: UICollectionViewLayout {
         var cycle = Int(floor((point - edgeMargin)/(twoDistance*CGFloat(total))))
         let cycleStart = edgeMargin + twoDistance*CGFloat(total*cycle)
         var idx = Int(floor((point - cycleStart)/twoDistance))
-        if !self._isInfinite && (cycle > 0) {
-            cycle = 0
-            idx = total - 1
-        } else if total == 0 || cycle < 0 {
+        if total == 0 || cycle < 0 {
             cycle = 0
             idx = 0
         } else if idx >= total {
@@ -234,7 +230,8 @@ public class MMBannerLayout: UICollectionViewLayout {
             let start = cycle == range.start.cycle ? range.start.index : 0
             let end  = cycle == range.end.cycle ? range.end.index : lastIdx
             var x:CGFloat = 0
-            let cycleStart = edgeMargin + twoDistance*CGFloat(self.collectionView!.calculate.totalCount*cycle)
+            let convert = self._isInfinite ? cycle : 0
+            let cycleStart = edgeMargin + twoDistance*CGFloat(self.collectionView!.calculate.totalCount*convert)
 
             (start...end).forEach({ (idx) in
                 

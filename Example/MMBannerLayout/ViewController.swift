@@ -16,6 +16,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.layoutIfNeeded()
+        collection.showsHorizontalScrollIndicator = false
         if let layout = collection.collectionViewLayout as? MMBannerLayout {
             layout.itemSpace = 10
             layout.itemSize = self.collection.frame.insetBy(dx: 40, dy: 40).size
