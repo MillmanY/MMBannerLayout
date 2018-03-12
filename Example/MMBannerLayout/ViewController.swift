@@ -20,6 +20,7 @@ class ViewController: UIViewController {
         if let layout = collection.collectionViewLayout as? MMBannerLayout {
             layout.itemSpace = 10
             layout.itemSize = self.collection.frame.insetBy(dx: 40, dy: 40).size
+            layout.minimuAlpha = 0.4
         }
     }
     

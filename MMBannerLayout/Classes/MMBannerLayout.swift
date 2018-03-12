@@ -59,6 +59,13 @@ public class MMBannerLayout: UICollectionViewLayout {
             }
         }
     }
+    public var minimuAlpha: CGFloat = 1.0 {
+        didSet {
+            self.invalidateLayout()
+        }
+    }
+    
+    
     fileprivate var radius: CGFloat{
         get {
             return angle*CGFloat.pi/180
@@ -145,7 +152,7 @@ public class MMBannerLayout: UICollectionViewLayout {
             return _indexRange
         }
     }
-
+    
     fileprivate var setIdx = [Int]()
     
     fileprivate func cycleAt(point: CGFloat) -> (cycle: Int,index: Int) {
@@ -171,7 +178,7 @@ public class MMBannerLayout: UICollectionViewLayout {
         if isInfinite {
             let twoDistance =  itemSize.width/2+angleItemWidth/2+itemSpace
             let needItem = Int(ceil(self.collectionView!.frame.width/twoDistance))
-            self._isInfinite = needItem < self.collectionView!.calculate.totalCount
+            self._isInfinite = needItem >= self.collectionView!.calculate.totalCount
             completed?(self._isInfinite)
         } else {
             self._isInfinite = isInfinite
@@ -185,7 +192,7 @@ public class MMBannerLayout: UICollectionViewLayout {
             width = CGFloat.greatestFiniteMagnitude
         } else {
             let twoDistance =  itemSize.width/2+angleItemWidth/2+itemSpace
-
+            
             width = (twoDistance) * CGFloat(self.collectionView!.calculate.totalCount-1) + itemSize.width + 2*edgeMargin
         }
         let height = self.collectionView!.frame.height
@@ -234,7 +241,7 @@ public class MMBannerLayout: UICollectionViewLayout {
             var x:CGFloat = 0
             let convert = self._isInfinite ? cycle : 0
             let cycleStart = edgeMargin + twoDistance*CGFloat(self.collectionView!.calculate.totalCount*convert)
-
+            
             (start...end).forEach({ (idx) in
                 
                 let location = twoDistance*CGFloat(idx)
@@ -265,23 +272,44 @@ public class MMBannerLayout: UICollectionViewLayout {
         var transform = CATransform3DIdentity
         
         transform.m34  = -1 / 700
+        
         setIdx.enumerated().forEach {
             switch $0.offset {
             case centerLoc-1:
-                let fix = centerX < midX ? radius*(1-percent) : radius
-                attributeList[$0.element].transform3D = CATransform3DRotate(transform, fix, 0, 1, 0)
+                
+                if centerX < midX {
+                    attributeList[$0.element].transform3D = CATransform3DRotate(transform, radius*(1-percent), 0, 1, 0)
+                    attributeList[$0.element].alpha = minimuAlpha + (1-minimuAlpha)*percent
+                    
+                } else {
+                    attributeList[$0.element].transform3D = CATransform3DRotate(transform, radius, 0, 1, 0)
+                    attributeList[$0.element].alpha = minimuAlpha
+                }
+                
             case centerLoc+1:
-                let fix = centerX > midX ? -radius*(1-percent) : -radius
-                attributeList[$0.element].transform3D = CATransform3DRotate(transform, fix, 0, 1, 0)
-
+                
+                if centerX > midX {
+                    attributeList[$0.element].alpha = minimuAlpha + (1-minimuAlpha)*percent
+                    attributeList[$0.element].transform3D = CATransform3DRotate(transform, -radius*(1-percent), 0, 1, 0)
+                } else {
+                    attributeList[$0.element].alpha = minimuAlpha
+                    attributeList[$0.element].transform3D = CATransform3DRotate(transform, -radius, 0, 1, 0)
+                }
             case centerLoc:
                 if centerX == midX {
+                    attributeList[$0.element].alpha = 1.0
                     attributeList[$0.element].transform3D = CATransform3DIdentity
+                } else if centerX > midX {
+                    attributeList[$0.element].alpha = minimuAlpha + (1-minimuAlpha)*(1-percent)
+                    attributeList[$0.element].transform3D = CATransform3DRotate(transform, radius*(percent), 0, 1, 0)
+                    
                 } else {
-                    let fix = centerX > midX ? radius*(percent) : -radius*(percent)
-                    attributeList[$0.element].transform3D = CATransform3DRotate(transform, fix, 0, 1, 0)
+                    attributeList[$0.element].alpha = minimuAlpha + (1-minimuAlpha)*(1-percent)
+                    attributeList[$0.element].transform3D = CATransform3DRotate(transform, -radius*(percent), 0, 1, 0)
                 }
+                
             default:
+                attributeList[$0.element].alpha = 0.5
                 let r = $0.offset > centerLoc ? -radius :radius
                 attributeList[$0.element].transform3D = CATransform3DRotate(transform, r, 0, 1, 0)
             }
@@ -322,7 +350,7 @@ public class MMBannerLayout: UICollectionViewLayout {
                 } else if !self._isInfinite {
                     idx = (_currentIdx+1 > lastIdx) ? lastIdx : _currentIdx+1
                 } else {
-                    idx = (_currentIdx+1 > lastIdx) ? (currentIdx)%lastIdx : _currentIdx+1                
+                    idx = (_currentIdx+1 > lastIdx) ? (currentIdx)%lastIdx : _currentIdx+1
                 }
             } else {
                 if indexSetWhenPrepare {
