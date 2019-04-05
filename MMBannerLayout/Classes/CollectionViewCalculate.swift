@@ -9,8 +9,9 @@
 import UIKit
 
 class CollectionViewCalculate: NSObject {
-    fileprivate var sections:Int = 0
-    fileprivate var sectionItemsCount = [Int:Int]()
+    private var needUpdate = false
+    private var sections: Int = 0
+    private var sectionItemsCount = [Int:Int]()
     var totalCount = 0
     
     unowned let collect: UICollectionView
@@ -18,22 +19,30 @@ class CollectionViewCalculate: NSObject {
         self.collect = collect
     }
     
-    func isNeedUpdate() -> Bool {
-        var isUpdate = false
-        totalCount = 0
-        if self.sections != collect.numberOfSections {
-            self.sections = collect.numberOfSections
-            sectionItemsCount.removeAll()
-        }
-        (0..<sections).forEach {
-            let count = collect.numberOfItems(inSection: $0)
-            if count != sectionItemsCount[$0] {
-                sectionItemsCount[$0] = count
-                isUpdate = true
+    var isNeedUpdate: Bool {
+        get {
+            var isUpdate = false
+            totalCount = 0
+            if self.sections != collect.numberOfSections {
+                self.sections = collect.numberOfSections
+                sectionItemsCount.removeAll()
             }
-            totalCount += count
+            (0..<sections).forEach {
+                let count = collect.numberOfItems(inSection: $0)
+                if count != sectionItemsCount[$0] {
+                    sectionItemsCount[$0] = count
+                    isUpdate = true
+                }
+                totalCount += count
+            }
+            let check = needUpdate
+            needUpdate = false
+            return isUpdate || check
         }
-        return isUpdate
+    }
+
+    func setNeedUpdate() {
+        needUpdate = true
     }
 }
 

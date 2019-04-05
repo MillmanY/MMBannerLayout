@@ -65,19 +65,24 @@ public class MMBannerLayout: UICollectionViewLayout {
         }
     }
     
+    private var twoDistance: CGFloat {
+        get {
+            return itemSize.width/2+angleItemWidth/2+itemSpace
+        }
+    }
     
-    fileprivate var radius: CGFloat{
+    private var radius: CGFloat{
         get {
             return angle*CGFloat.pi/180
         }
     }
-    fileprivate var angleItemWidth: CGFloat {
+    private var angleItemWidth: CGFloat {
         get {
             return itemSize.width*cos(radius)
         }
     }
     
-    fileprivate var _itemSize:CGSize?
+    private var _itemSize:CGSize?
     public var itemSize: CGSize{
         set {
             self._itemSize = newValue
@@ -87,28 +92,36 @@ public class MMBannerLayout: UICollectionViewLayout {
             return _itemSize ?? self.collectionView!.frame.size
         }
     }
-    fileprivate var indexSetWhenPrepare = false
-    fileprivate var _currentIdx = 0
-    public var currentIdx:Int {
-        set {
-            let centerX = self.collectionView!.contentOffset.x + (self.collectionView!.frame.width/2)
-            
-            if let attr = self.attributeList[safe: newValue] {
-                let isAnimate = !(!self._isInfinite && newValue == 0)
-                
-                let x = self.collectionView!.contentOffset.x + attr.realFrame.midX - centerX
-                self.collectionView!.setContentOffset(CGPoint(x: x, y: 0), animated: isAnimate)
-            }
-            self._currentIdx = newValue
-            
-        } get {
+    private var indexSetWhenPrepare = false
+    private var _currentIdx = 0
+    public var currentIdx: Int {
+        get {
             return _currentIdx
         }
     }
     
-    fileprivate var _isInfinite = false {
+    @discardableResult
+    public func setCurrentIndex(_ index: Int) -> Bool {
+        guard let count = self.collectionView?.calculate.totalCount, index < count else {
+            return false
+        }
+        let isAnimate = !(!self._isInfinite && index == 0)
+        if let frame = self.attributeList[safe: index]?.realFrame, frame != .zero {
+            let centerX = self.collectionView!.contentOffset.x + (self.collectionView!.frame.width/2)
+            let x = self.collectionView!.contentOffset.x + frame.midX - centerX
+            self.collectionView!.setContentOffset(CGPoint(x: x, y: 0), animated: isAnimate)
+        } else {
+            let cycleStart = self._isInfinite ? twoDistance*CGFloat(self.collectionView!.calculate.totalCount*100000) : 0
+            let location = twoDistance*CGFloat(index)
+            let x = cycleStart + location
+            self.collectionView!.setContentOffset(CGPoint(x: x, y: 0), animated: isAnimate)
+        }
+        self._currentIdx = index
+        return true
+    }
+    
+    private var _isInfinite = false {
         didSet {
-            let twoDistance =  itemSize.width/2+angleItemWidth/2+itemSpace
             let cycleStart = self._isInfinite ? twoDistance*CGFloat(self.collectionView!.calculate.totalCount*100000) : 0
             let location = twoDistance*CGFloat(_currentIdx)
             let x = cycleStart + location
@@ -117,13 +130,13 @@ public class MMBannerLayout: UICollectionViewLayout {
         }
     }
     
-    fileprivate var edgeMargin: CGFloat {
+    private var edgeMargin: CGFloat {
         get {
             return (self.collectionView!.frame.width-itemSize.width)/2
         }
     }
     
-    fileprivate var timer: Timer?
+    private var timer: Timer?
     public var autoPlayStatus: AutoPlayStatus = .none {
         didSet {
             timer?.invalidate()
@@ -132,20 +145,20 @@ public class MMBannerLayout: UICollectionViewLayout {
                 timer = nil
             case .play(let duration):
                 timer = Timer.scheduledTimer(timeInterval: duration, target: self, selector: #selector(MMBannerLayout.autoScroll), userInfo: nil, repeats: true)
-                RunLoop.current.add(timer!, forMode: .commonModes)
+                RunLoop.current.add(timer!, forMode: .common)
             }
         }
     }
     
-    fileprivate var attributeList = [BannerLayoutAttributes]()
+    private var attributeList = [BannerLayoutAttributes]()
     override public var collectionViewContentSize: CGSize {
         get {
             return self.totalContentSize(isInfinite: self._isInfinite)
         }
     }
     
-    fileprivate var _indexRange = InfiniteLayoutRange()
-    fileprivate var indexRange: InfiniteLayoutRange {
+    private var _indexRange = InfiniteLayoutRange()
+    private var indexRange: InfiniteLayoutRange {
         get {
             _indexRange.start = self.cycleAt(point: self.collectionView!.contentOffset.x)
             _indexRange.end = self.cycleAt(point: self.collectionView!.contentOffset.x + self.collectionView!.frame.width)
@@ -153,13 +166,10 @@ public class MMBannerLayout: UICollectionViewLayout {
         }
     }
     
-    fileprivate var setIdx = [Int]()
+    private var setIdx = [Int]()
     
-    fileprivate func cycleAt(point: CGFloat) -> (cycle: Int,index: Int) {
+    private func cycleAt(point: CGFloat) -> (cycle: Int,index: Int) {
         let total = self.collectionView!.calculate.totalCount
-        
-        let twoDistance =  itemSize.width/2+angleItemWidth/2+itemSpace
-        
         var cycle = Int(floor((point - edgeMargin)/(twoDistance*CGFloat(total))))
         let cycleStart = edgeMargin + twoDistance*CGFloat(total*cycle)
         var idx = Int(floor((point - cycleStart)/twoDistance))
@@ -169,16 +179,14 @@ public class MMBannerLayout: UICollectionViewLayout {
         } else if idx >= total {
             idx = total - 1
         }
-        
         return (cycle, idx)
     }
     
     public func setInfinite(isInfinite: Bool, completed:((_ success: Bool) -> Void)?) {
-        
+        self.collectionView!.calculate.setNeedUpdate()
         if isInfinite {
-            let twoDistance =  itemSize.width/2+angleItemWidth/2+itemSpace
             let needItem = Int(ceil(self.collectionView!.frame.width/twoDistance))
-            self._isInfinite = needItem >= self.collectionView!.calculate.totalCount
+            self._isInfinite = needItem < self.collectionView!.calculate.totalCount
             completed?(self._isInfinite)
         } else {
             self._isInfinite = isInfinite
@@ -186,13 +194,11 @@ public class MMBannerLayout: UICollectionViewLayout {
         }
     }
     
-    fileprivate func totalContentSize(isInfinite: Bool) -> CGSize {
+    private func totalContentSize(isInfinite: Bool) -> CGSize {
         var width:CGFloat = 0
         if isInfinite {
             width = CGFloat.greatestFiniteMagnitude
         } else {
-            let twoDistance =  itemSize.width/2+angleItemWidth/2+itemSpace
-            
             width = (twoDistance) * CGFloat(self.collectionView!.calculate.totalCount-1) + itemSize.width + 2*edgeMargin
         }
         let height = self.collectionView!.frame.height
@@ -200,29 +206,29 @@ public class MMBannerLayout: UICollectionViewLayout {
         return CGSize(width: width, height: height)
     }
     
-    @objc fileprivate func autoScroll() {
+    @objc private func autoScroll() {
         guard let collect = self.collectionView, !collect.isDragging else {
             timer?.invalidate()
             timer = nil
             return
         }
         let will = self.currentIdx + 1
-        self.currentIdx = (will < self.collectionView!.calculate.totalCount) ? will : 0
+        self._currentIdx = (will < self.collectionView!.calculate.totalCount) ? will : 0
     }
     
     override public func prepare() {
         super.prepare()
-        self.collectionView!.decelerationRate = UIScrollViewDecelerationRateFast
-        if self.collectionView!.calculate.isNeedUpdate() {
-            attributeList.removeAll()
-            attributeList = self.generateAttributeList()
+        self.collectionView!.decelerationRate = UIScrollView.DecelerationRate.fast
+        if self.collectionView!.calculate.isNeedUpdate {
             let reset = self._isInfinite
             self._isInfinite = reset
+            attributeList.removeAll()
+            attributeList = self.generateAttributeList()
         }
         self.setAttributeFrame()
     }
     
-    fileprivate func setAttributeFrame() {
+    private func setAttributeFrame() {
         if self.collectionView!.contentOffset.x < 0 || self.collectionView?.calculate.totalCount == 0 {
             return
         }
@@ -234,7 +240,6 @@ public class MMBannerLayout: UICollectionViewLayout {
         var centerIdx = 0
         var preDistance = CGFloat.greatestFiniteMagnitude
         
-        let twoDistance =  itemSize.width/2+angleItemWidth/2+itemSpace
         (range.start.cycle...range.end.cycle).forEach { (cycle) in
             let start = cycle == range.start.cycle ? range.start.index : 0
             let end  = cycle == range.end.cycle ? range.end.index : lastIdx
@@ -316,7 +321,7 @@ public class MMBannerLayout: UICollectionViewLayout {
         }
     }
     
-    fileprivate func generateAttributeList() -> [BannerLayoutAttributes] {
+    private func generateAttributeList() -> [BannerLayoutAttributes] {
         return (0..<self.collectionView!.numberOfSections).flatMap { (section) -> [BannerLayoutAttributes] in
             (0..<self.collectionView!.numberOfItems(inSection: section)).map({
                 return BannerLayoutAttributes(forCellWith: IndexPath(row: $0, section: section))
@@ -333,7 +338,7 @@ public class MMBannerLayout: UICollectionViewLayout {
     }
     
     override public func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
-        return setIdx.flatMap({ attributeList[safe:$0] })
+        return setIdx.compactMap({ attributeList[safe:$0] })
     }
     
     override public func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
@@ -374,7 +379,7 @@ public class MMBannerLayout: UICollectionViewLayout {
         return fix
     }
     
-    fileprivate func findCenterAttribute() -> BannerLayoutAttributes? {
+    private func findCenterAttribute() -> BannerLayoutAttributes? {
         let centerX = self.collectionView!.contentOffset.x + (self.collectionView!.frame.width/2)
         var attribute: BannerLayoutAttributes?
         var preDistance = CGFloat.greatestFiniteMagnitude
