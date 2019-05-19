@@ -54,7 +54,7 @@ public class MMBannerLayout: UICollectionViewLayout {
             self.invalidateLayout()
             if let attr = self.findCenterAttribute()  {
                 let centerX = self.collectionView!.contentOffset.x + (self.collectionView!.frame.width/2)
-                self._currentIdx = attributeList.index(of: attr)!
+                self._currentIdx = attributeList.firstIndex(of: attr)!
                 self.collectionView!.contentOffset = CGPoint.init(x: self.collectionView!.contentOffset.x + attr.realFrame.midX - centerX, y: 0)
             }
         }
@@ -371,7 +371,7 @@ public class MMBannerLayout: UICollectionViewLayout {
             }
         } else {
             if let attr = self.findCenterAttribute()  {
-                self._currentIdx = attributeList.index(of: attr)!
+                self._currentIdx = attributeList.firstIndex(of: attr)!
                 fix.x = self.collectionView!.contentOffset.x + attr.realFrame.midX - centerX
             }
         }
