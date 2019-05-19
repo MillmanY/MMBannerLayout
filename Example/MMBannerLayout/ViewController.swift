@@ -25,8 +25,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func appendAction() {
-        images.removeLast()
-        images.removeLast()
+        images.append(#imageLiteral(resourceName: "images3"))
         collection.reloadData()
     }
 
