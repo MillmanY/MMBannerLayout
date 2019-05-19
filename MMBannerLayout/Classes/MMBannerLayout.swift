@@ -262,9 +262,9 @@ public class MMBannerLayout: UICollectionViewLayout {
                 setIdx.append(idx)
             })
         }
-        let midX = attributeList[_currentIdx].frame.midX
-        var percent = abs(centerX-midX)/twoDistance
         
+        let midX = attributeList[centerIdx].frame.midX
+        var percent = abs(centerX-midX)/twoDistance
         if percent >= 1 {
             percent = 0.0
             self._currentIdx = centerIdx
@@ -273,11 +273,11 @@ public class MMBannerLayout: UICollectionViewLayout {
             indexSetWhenPrepare = false
         }
         self.focusIndexPath = attributeList[safe:_currentIdx]?.indexPath
-        let centerLoc = setIdx.index(of: _currentIdx) ?? 0
+        let centerLoc = setIdx.firstIndex(of: _currentIdx) ?? 0
         var transform = CATransform3DIdentity
         
         transform.m34  = -1 / 700
-        
+        print("idx \(setIdx) Center \(centerLoc) percent \(percent)")
         setIdx.enumerated().forEach {
             switch $0.offset {
             case centerLoc-1:
