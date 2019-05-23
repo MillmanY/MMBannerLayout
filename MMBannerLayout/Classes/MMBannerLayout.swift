@@ -222,6 +222,7 @@ public class MMBannerLayout: UICollectionViewLayout {
             attributeList.removeAll()
             attributeList = self.generateAttributeList()
             self.focusIndexPath = nil
+            self.collectionView?.contentOffset = .zero
         }
         self.setAttributeFrame()
     }
