@@ -232,6 +232,7 @@ public class MMBannerLayout: UICollectionViewLayout {
         if self.collectionView!.contentOffset.x < 0 || self.collectionView?.calculate.totalCount == 0 {
             return
         }
+        
         setIdx.removeAll()
         let height = self.collectionView!.frame.height
         let range =  self.indexRange
