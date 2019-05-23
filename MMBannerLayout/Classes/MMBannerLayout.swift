@@ -9,7 +9,7 @@
 import UIKit
 
 @objc public protocol BannerLayoutDelegate {
-    @objc optional func collectionView(_ collectionView: UICollectionView, focusAt indexPath: IndexPath)
+    @objc optional func collectionView(_ collectionView: UICollectionView, focusAt indexPath: IndexPath?)
 }
 
 public enum AutoPlayStatus {
@@ -41,11 +41,8 @@ class BannerLayoutAttributes: UICollectionViewLayoutAttributes {
 public class MMBannerLayout: UICollectionViewLayout {
     public var focusIndexPath: IndexPath? {
         didSet {
-            guard let f = focusIndexPath, (focusIndexPath != oldValue) else {
-                return
-            }
-            
-            (self.collectionView!.delegate as? BannerLayoutDelegate)?.collectionView?(self.collectionView!, focusAt: f)
+            if focusIndexPath == oldValue { return }
+            (self.collectionView!.delegate as? BannerLayoutDelegate)?.collectionView?(self.collectionView!, focusAt: focusIndexPath)
         }
     }
     public var itemSpace:CGFloat = 0.0
@@ -224,6 +221,7 @@ public class MMBannerLayout: UICollectionViewLayout {
             self._isInfinite = reset
             attributeList.removeAll()
             attributeList = self.generateAttributeList()
+            self.focusIndexPath = nil
         }
         self.setAttributeFrame()
     }
