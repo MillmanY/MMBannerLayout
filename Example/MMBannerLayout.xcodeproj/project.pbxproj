@@ -218,7 +218,7 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = Q4F8GN9847;
+						DevelopmentTeam = BSPD9WB6WT;
 						LastSwiftMigration = 0820;
 					};
 					607FACE41AFB9204008FA782 = {
@@ -503,7 +503,7 @@
 			baseConfigurationReference = 47326BB4FF59F7B643FD8E00 /* Pods-MMBannerLayout_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = Q4F8GN9847;
+				DEVELOPMENT_TEAM = BSPD9WB6WT;
 				INFOPLIST_FILE = MMBannerLayout/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
@@ -518,7 +518,7 @@
 			baseConfigurationReference = 4171A04BA24A1B604E3DC073 /* Pods-MMBannerLayout_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = Q4F8GN9847;
+				DEVELOPMENT_TEAM = BSPD9WB6WT;
 				INFOPLIST_FILE = MMBannerLayout/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;

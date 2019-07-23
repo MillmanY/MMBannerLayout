@@ -155,14 +155,6 @@ public class MMBannerLayout: UICollectionViewLayout {
     }
     
     private var _indexRange = InfiniteLayoutRange()
-    private var indexRange: InfiniteLayoutRange {
-        get {
-            _indexRange.start = self.cycleAt(point: self.collectionView!.contentOffset.x)
-            _indexRange.end = self.cycleAt(point: self.collectionView!.contentOffset.x + self.collectionView!.frame.width)
-            return _indexRange
-        }
-    }
-    
     private var setIdx = [Int]()
     
     private func cycleAt(point: CGFloat) -> (cycle: Int,index: Int) {
@@ -225,18 +217,19 @@ public class MMBannerLayout: UICollectionViewLayout {
             _currentIdx = 0
             self.collectionView?.contentOffset = .zero
         }
-        self.setAttributeFrame()
+        self.setAttributeFrame(offset: self.collectionView!.contentOffset)
     }
     
-    private func setAttributeFrame() {
-        if self.collectionView!.contentOffset.x < 0 || self.collectionView?.calculate.totalCount == 0 {
+    private func setAttributeFrame(offset: CGPoint) {
+        if offset.x < 0 || self.collectionView?.calculate.totalCount == 0 {
             return
         }
-        
+        _indexRange.start = self.cycleAt(point: offset.x)
+        _indexRange.end = self.cycleAt(point: offset.x + self.collectionView!.frame.width)
+        let range =  self._indexRange
         setIdx.removeAll()
         let height = self.collectionView!.frame.height
-        let range =  self.indexRange
-        let centerX = self.collectionView!.contentOffset.x + (self.collectionView!.frame.width/2)
+        let centerX = offset.x + (self.collectionView!.frame.width/2)
         let lastIdx = self.collectionView!.calculate.totalCount - 1
         var centerIdx = 0
         var preDistance = CGFloat.greatestFiniteMagnitude
@@ -254,7 +247,7 @@ public class MMBannerLayout: UICollectionViewLayout {
                 x = cycleStart + location
                 let f = CGRect(x: x, y: (height - itemSize.height)/2, width: itemSize.width, height: itemSize.height)
                 let mid = CGPoint(x: f.midX, y: f.midY)
-                let distance = mid.distance(point: CGPoint(x: centerX, y: self.collectionView!.contentOffset.y))
+                let distance = mid.distance(point: CGPoint(x: centerX, y: offset.y))
                 if preDistance > distance {
                     preDistance = distance
                     centerIdx = idx
@@ -343,8 +336,9 @@ public class MMBannerLayout: UICollectionViewLayout {
     
     override public func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         var fix = proposedContentOffset
+        
         let lastIdx = self.collectionView!.calculate.totalCount - 1
-        let centerX = self.collectionView!.contentOffset.x + (self.collectionView!.frame.width/2)
+        let centerX = proposedContentOffset.x + (self.collectionView!.frame.width/2)
         
         if velocity.x != 0 {
             var idx = _currentIdx
@@ -366,9 +360,14 @@ public class MMBannerLayout: UICollectionViewLayout {
                     idx = (_currentIdx-1 < 0) ? lastIdx : currentIdx-1
                 }
             }
+            
+            if self.attributeList[safe: idx]?.realFrame == .zero {
+                self.setAttributeFrame(offset: proposedContentOffset)
+            }
+            
             if let attr = self.attributeList[safe: idx] {
                 self._currentIdx = idx
-                fix.x = self.collectionView!.contentOffset.x + attr.realFrame.midX - centerX
+                fix.x = proposedContentOffset.x + attr.realFrame.midX - centerX
             }
         } else {
             if let attr = self.findCenterAttribute()  {
