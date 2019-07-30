@@ -19,9 +19,7 @@ class ViewController: UIViewController {
         collection.showsHorizontalScrollIndicator = false
         if let layout = collection.collectionViewLayout as? MMBannerLayout {
             layout.itemSpace = 10
-            layout.itemSize = CGSize.init(width: self.view.frame.width-40, height: 100)
-
-//            layout.itemSize = self.collection.frame.insetBy(dx: 40, dy: 40).size
+            layout.itemSize = self.collection.frame.insetBy(dx: 40, dy: 40).size
             layout.minimuAlpha = 0.4
         }
     }

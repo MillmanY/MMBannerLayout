@@ -202,7 +202,9 @@ public class MMBannerLayout: UICollectionViewLayout {
             return
         }
         let will = self.currentIdx + 1
-        self._currentIdx = (will < self.collectionView!.calculate.totalCount) ? will : 0
+        let convert = (will < self.collectionView!.calculate.totalCount) ? will : 0
+
+        self.setCurrentIndex(convert)
     }
     
     override public func prepare() {
