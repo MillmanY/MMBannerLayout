@@ -217,7 +217,9 @@ public class MMBannerLayout: UICollectionViewLayout {
             attributeList = self.generateAttributeList()
             self.focusIndexPath = nil
             _currentIdx = 0
-            self.collectionView?.contentOffset = .zero
+            if !reset {
+                self.collectionView?.contentOffset = .zero
+            }
         }
         self.setAttributeFrame(offset: self.collectionView!.contentOffset)
     }
